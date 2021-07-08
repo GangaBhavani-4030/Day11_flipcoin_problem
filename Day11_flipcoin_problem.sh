@@ -1,7 +1,10 @@
 #day 11 programm
 echo "enter upto which number we have to flip the coin:"
 read n
-declare -A single_combo=( [h]=0  [t]=0 )
+declare -A single_combo=( 
+		[h]=0  
+		[t]=0
+ )
 echo 
 for(( fl = 1; lf <= n; fl++ ))
 do
@@ -21,3 +24,32 @@ do
 	echo "percentage of $combination is{single_combo[$combination]}%"
 done
 
+echo "######################### Double combination #######################"
+declare -A double_combo=(
+	[hh]=0
+	[ht]=0
+	[th]=0
+	[tt]=0
+)
+for(( fl = 1; fl <= n; fl++ ))
+do
+	echo-n "flip -$fl "
+	(( c1 = RANDOM % 2 ))
+	(( c2 = RANDOM % 2 ))
+	case $c1$c2 
+		00)echo "heads heads"
+		(( double_combo[hh]++ )) ;;
+		01)echo "heads tails"
+		(( double_combo[ht]++ )) ;;
+		10)echo "tails heads"	
+		(( double_combo[th]++ )) ;;
+		11)echo "tails tails"
+		(( double_combo[tt]++ )) ;;
+	esac
+done
+for combination in ${!double_combo[@]}
+do
+	percentage=$(( ${double_combo[$combination]} * 100/n ))
+	double_combo[$combination]=$percentage
+	echo "percentage of $combination is ${double_combo[$combination]}%"
+done

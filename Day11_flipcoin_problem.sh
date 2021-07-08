@@ -53,3 +53,65 @@ do
 	double_combo[$combination]=$percentage
 	echo "percentage of $combination is ${double_combo[$combination]}%"
 done
+
+
+
+echo "############################### TRIPLET-COMBINATION #####################################"
+declare -A triple_combo=( 
+                                    [HHH]=0
+                                    [HHT]=0
+                                    [HTH]=0
+                                    [HTT]=0
+                                    [THH]=0
+                                    [THT]=0
+                                    [TTH]=0
+                                    [TTT]=0
+
+                                )
+for(( fl = 1; fl <= n; fl++ ))
+do
+    echo -n "Flip-$fl  "
+    (( c1 = RANDOM % 2 ))
+    (( c2 = RANDOM % 2 ))
+    (( c3 = RANDOM % 2 ))
+    case $c1$c2$c3 in 
+        000)
+            echo "Heads Heads Heads"
+            (( triple_combo[HHH]++ )) 
+            ;;
+        001)
+            echo "Heads Heads Tails"
+            (( triple_combo[HHT]++ ))
+            ;;
+        010)
+            echo "Heads Tails Heads"
+            (( triple_combo[HTH]++ ))
+            ;;
+        011)
+            echo "Heads Tails Tails"
+            (( triple_combo[HTT]++ ))
+            ;;
+        100)
+            echo "Tails Heads Heads"
+            (( triple_combo[THH]++ )) 
+            ;;
+        101)
+            echo "Tails Heads Tails"
+            (( triple_combo[THT]++ ))
+            ;;
+        110)
+            echo "Tails Tails Heads"
+            (( triple_combo[TTH]++ ))
+            ;;
+        111)
+           echo "Tails Tails Tails"
+            (( triple_combo[TTT]++ ))
+            ;;
+    esac
+done
+for combination in ${!triple_combo[@]}
+do
+    percentage=$(( ${triple_combo[$combination]}  * 100 / n ))
+    triple_combo[$combination]=$percentage
+    echo "percentage of $combination is ${triple_combo[$combination]}%"
+done

@@ -1,3 +1,4 @@
+#day 11 programms
 coin=$(( RANDOM % 2 ))
 if(( coin == 0 ))
 then
